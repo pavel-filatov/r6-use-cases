@@ -10,13 +10,14 @@ as_tibble(featrco) %>%
   gather(x, value, -y) %>% 
   mutate(
     x = parse_number(x), 
-    value = 1 - value + rnorm(length(featrco), 0, 0.06) + rbernoulli(1, 0.6)
+    value = value + rnorm(length(featrco), 0, 0.1)
   ) %>% 
+  filter(value > 0.5) %>% 
   # filter(between(y, 8, 56)) %>%
   ggplot(aes(x, y, fill = value)) + 
   geom_tile(show.legend = FALSE) + 
   coord_equal() + 
   scale_y_reverse() +
   theme(text = element_blank(), line = element_blank(), panel.background = element_blank()) +
-  scale_fill_gradientn(colours = c("white", rwave::wmpalette[4]))
+  scale_fill_gradientn(colours = c("white", "powderblue", "royalblue", "blue", "powderblue"))
   
